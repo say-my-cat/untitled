@@ -1,6 +1,6 @@
 from sounds import *
 from effects import *
-from parameters import display
+from settings import display
 
 
 class Button:
