@@ -58,7 +58,10 @@ class Game:
         #pygame.mixer.music.play(-1)
 
         start_btn = Button(288, 70)
+        cont_btn = Button(222, 70)
+        lvl2_btn = Button(170, 70)
         quit_btn = Button(120, 70)
+
 
         show = True
         while show:
