@@ -1,10 +1,11 @@
-#import parameters as p
 from button import *
+from states import *
 from vrag import *
 from ob import *
 from effects import *
 from images import *
 from parameters import *
+from save import *
 
 
 class Game:
@@ -32,6 +33,25 @@ class Game:
         self.max_above = 0
         self.cooldown = 0
 
+    def start(self):
+        while True:
+            if self.game_state.check(State.MENU):
+                self.show_menu()
+            elif self.game_state.check(State.START):
+                self.choose_theme()
+                self.choose_hero()
+                self.start_game()
+            elif self.game_state.check(State.CONTINUE):
+                # self.choose_them = self.save_data.get('theme')
+                self.max_scores = self.save_data.get('max')
+                self.start_game()
+            elif self.game_state.check(State.LEVEL_2):
+                self.levl_2()
+            elif self.game_state.check(State.QUIT):
+                self.save_data.save()
+                self.save_data.add('max', self.max_scores)
+                break
+
     def show_menu(self):
         #pygame.mixer.music.load('Big_Slinker.mp3')
         #pygame.mixer.music.set_volume(0.3)  # 30% громкости
@@ -48,8 +68,18 @@ class Game:
                     quit()
 
             display.blit(menu_bckgr, (0, 0))
-            start_btn.draw(270, 200, 'Start game', self.start_game, 50)
-            quit_btn.draw(358, 300, 'Quit', quit, 50)
+            if start_btn.draw(270, 200, 'Start game', font_size=50):  # размер не работает
+                self.game_state.change(State.START)
+                return
+            if lvl2_btn.draw(320, 300, 'Level 2', font_size=50):  # размер не работает
+                self.game_state.change(State.LEVEL_2)
+                return
+            if cont_btn.draw(300, 400, 'Continue game', font_size=50):  # размер не работает
+                self.game_state.change(State.CONTINUE)
+                return
+            if quit_btn.draw(345, 500, 'Quit', font_size=50):  # размер не работает
+                self.game_state.change(State.QUIT)
+                return
 
             #draw_mouse()
 
@@ -70,6 +100,104 @@ class Game:
             p.usr_y = p.display_height - p.usr_height - 90  # начальное значение
             self.health = 2
             self.cooldown = 0
+
+    def choose_theme(self):
+        theme1 = Button(250, 70)
+        theme2 = Button(300, 70)
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            display.fill((255, 255, 255))
+
+            if theme1.draw(270, 200, 'Day theme', font_size=50):
+                set_theme(1)
+                return
+            if theme2.draw(270, 300, 'Night theme', font_size=50):
+                set_theme(2)
+                return
+
+            pygame.display.update()
+            clock.tick(60)
+
+    def choose_hero(self):
+        hero1 = Button(200, 70)
+        hero2 = Button(200, 70)
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            display.fill((255, 255, 255))
+
+            if hero1.draw(270, 200, '1theme', font_size=50):
+                set_hero(1)
+                return
+            if hero2.draw(270, 300, '2theme', font_size=50):
+                set_hero(2)
+                return
+
+            pygame.display.update()
+            clock.tick(60)
+
+    def choose_lv(self):
+        lvl1 = Button(200, 70)
+        lvl2 = Button(200, 70)
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            display.fill((255, 255, 255))
+
+            if lvl1.draw(270, 200, '1level', font_size=50):
+                self.lv = 1
+                return
+            if lvl2.draw(270, 300, '2level', font_size=50):
+                self.lv = 2
+                return
+
+            pygame.display.update()
+            clock.tick(60)
+
+    def levl_2(self):
+        game = True
+
+        while game:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_SPACE]:  # пробел
+                self.make_jump = True
+
+            if self.make_jump:
+                self.jump()
+
+            display.blit(img.lvl2_bckgr, (0, 0))  # фон, координаты
+
+            self.draw_dino()
+
+            if keys[pygame.K_ESCAPE]:
+                self.pause()
+
+            self.show_health()
+
+            # draw_mouse()
+            pygame.display.update()
+            clock.tick(80)  # кол-во обновлений дисплея
+        return self.game_over()
+
 
     def game_cycle(self):  # функция создания игры
         game = True
