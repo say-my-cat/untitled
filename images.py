@@ -5,7 +5,7 @@ pygame.init()
 icon = pygame.image.load('fon/icon.png')
 menu_bckgr = pygame.image.load('fon/Menu.jpg')
 
-land = pygame.image.load('fon/Land.jpg')
+land = pygame.image.load('fon/Land1.jpg')
 
 cactus_img = [pygame.image.load('ob/Cactus0.png'), pygame.image.load('ob/Cactus1.png'),
               pygame.image.load('ob/Cactus2.png')]
