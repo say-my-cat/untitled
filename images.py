@@ -30,14 +30,6 @@ health_img = pygame.transform.scale(health_img, (30, 30))
 bullet_img = pygame.image.load('efect/shot.png')
 bullet_img = pygame.transform.scale(bullet_img, (30, 9))
 
-light_img = [pygame.image.load('efect/Light0.png'), pygame.image.load('efect/Light1.png'),
-             pygame.image.load('efect/Light2.png'), pygame.image.load('efect/Light3.png'),
-             pygame.image.load('efect/Light4.png'), pygame.image.load('efect/Light5.png'),
-             pygame.image.load('efect/Light6.png'), pygame.image.load('efect/Light7.png'),
-             pygame.image.load('efect/Light8.png'), pygame.image.load('efect/Light9.png'),
-             pygame.image.load('efect/Light10.png')]
-
-
 def set_theme(num):
     global land
     land = pygame.image.load('fon/Land{}.jpg'.format(num))
