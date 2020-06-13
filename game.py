@@ -86,8 +86,6 @@ class Game:
                 self.game_state.change(State.QUIT)
                 return
 
-            #draw_mouse()
-
             pygame.display.update()
             clock.tick(60)
 
@@ -196,7 +194,6 @@ class Game:
 
             self.show_health()
 
-            # draw_mouse()
             pygame.display.update()
             clock.tick(80)  # кол-во обновлений дисплея
         return self.game_over()
@@ -286,8 +283,7 @@ class Game:
 
             self.draw_vrag(all_vrags)
             self.chec_vrag_dmg(all_ms_bullets, all_vrags)
-
-            #draw_mouse()
+           
             pygame.display.update()
             clock.tick(80)  # кол-во обновлений дисплея
         return self.game_over()
