@@ -92,8 +92,6 @@ class Game:
             clock.tick(60)
 
     def start_game(self):
-        #global scores, make_jump, jump_counter, usr_y, health, cooldown
-
         #pygame.mixer.music.load('background.mp3')
         #pygame.mixer.music.set_volume(0.3)  # 30% громкости
         #pygame.mixer.music.play(-1)  # пока не проиграешь
@@ -312,6 +310,7 @@ class Game:
             if keys[pygame.K_RETURN]:  # enter
                 return True
             if keys[pygame.K_ESCAPE]:
+                self.game_state.change(State.QUIT)
                 return False
 
             pygame.display.update()
