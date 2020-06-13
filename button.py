@@ -25,6 +25,8 @@ class Button:
                         quit()
                     else:
                         action()
+                 else:
+                    return True
         else:
             pygame.draw.rect(display, self.inactive_clr, (x, y, self.width, self.height))
         print_text(message=message, x=x+10, y=y+10)
