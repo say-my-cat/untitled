@@ -3,7 +3,7 @@ from states import *
 from vrag import *
 from ob import *
 from effects import *
-from images import *
+import images as img
 from parameters import *
 from save import *
 
@@ -23,6 +23,7 @@ class Game:
         self.button_sound = pygame.mixer.Sound('song/button.wav')
         self.bullet_sound = pygame.mixer.Sound('song/shot.wav')
 
+        self.lv = 1
         self.cactus_opions = [40, 465, 14, 420, 40, 434]  # ширина, высота дисплея(600)-100-высота какткса
         self.img_counter = 0 # dino
         self.health = 2 # кол-во жизней
@@ -32,6 +33,8 @@ class Game:
         self.max_scores = 0
         self.max_above = 0
         self.cooldown = 0
+        self.game_state = GameState()
+        self.save_data = Save()
 
     def start(self):
         while True:
@@ -61,7 +64,6 @@ class Game:
         cont_btn = Button(222, 70)
         lvl2_btn = Button(170, 70)
         quit_btn = Button(120, 70)
-
 
         show = True
         while show:
@@ -201,7 +203,6 @@ class Game:
             clock.tick(80)  # кол-во обновлений дисплея
         return self.game_over()
 
-
     def game_cycle(self):  # функция создания игры
         game = True
         cactus_arr = []
@@ -236,7 +237,7 @@ class Game:
 
             self.count_scores(cactus_arr)
 
-            display.blit(land, (0, 0))  # фон, координаты
+            display.blit(img.land, (0, 0))  # фон, координаты
             print_text('Scores: ' + str(self.scores), 600, 10)
 
             self.draw_array(cactus_arr)
@@ -342,7 +343,7 @@ class Game:
         if self.img_counter == 25:
             self.img_counter = 0
 
-        display.blit(dino_img[self.img_counter // 5], (p.usr_x, p.usr_y+10))
+        display.blit(img.dino_img[self.img_counter // 5], (p.usr_x, p.usr_y+10))
         self.img_counter += 1
 
     def create_cactus_arr(self, array):  # создание каактуса
@@ -370,7 +371,7 @@ class Game:
             if not check:
                 self.object_return(array, cactus)
 
-    def check_collision(self, barriers):  # функция сталкновения для каждого кактуса своя #234
+    def check_collision(self, barriers):  # функция сталкновения для каждого кактуса своя 
         for barrier in barriers:
             if barrier.y == 449:  # little cac
                 if not self.make_jump:
