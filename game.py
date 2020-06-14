@@ -7,6 +7,7 @@ from effects import *
 import images as img
 from parameters import *
 from save import *
+from high_score import *
 
 
 class Game:
