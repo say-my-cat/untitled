@@ -1,4 +1,3 @@
-#import parameters as p
 from button import *
 from states import *
 from vrag import *
@@ -36,7 +35,10 @@ class Game:
         self.max_above = 0
         self.cooldown = 0
         self.game_state = GameState()
+        
         self.save_data = Save()
+        self.high_scores = HighScore(self.save_data.get('hs'))
+        # self.save_data.add('hs', {})
 
     def start(self):
         while True:
@@ -55,6 +57,7 @@ class Game:
             elif self.game_state.check(State.QUIT):
                 self.save_data.save()
                 self.save_data.add('max', self.max_scores)
+                self.save_data.add('hs', self.high_scores.hs_table)
                 break
 
     def show_menu(self):
@@ -75,6 +78,7 @@ class Game:
                     quit()
 
             display.blit(menu_bckgr, (0, 0))
+            
             if start_btn.draw(270, 200, 'Start game', font_size=50):
                 self.game_state.change(State.START)
                 return
@@ -87,8 +91,6 @@ class Game:
             if quit_btn.draw(345, 500, 'Quit', font_size=50):
                 self.game_state.change(State.QUIT)
                 return
-
-            get_input()
 
             pygame.display.update()
             clock.tick(60)
@@ -237,8 +239,11 @@ class Game:
             self.count_scores(cactus_arr)
 
             display.blit(img.land, (0, 0))  # фон, координаты
+            
+            if keys[pygame.K_q]: #при нажатии Q открывается окошка для ввода имени и выхода в таблицу "рейтинга"
+                game = False
+                
             print_text('Scores: ' + str(self.scores), 600, 10)
-
             self.draw_array(cactus_arr)
             self.move_object(stone, cloud)
 
@@ -275,10 +280,10 @@ class Game:
             self.heart_plus(heart)
 
             if self.check_collision(cactus_arr):  # проверка столкновения
-
-
-
-                game = False
+                pygame.mixer.music.stop()
+                pygame.mixer.Sound.play(fall_sound)
+                if not self.check_health():
+                    game = False
 
             self.show_health()
 
@@ -297,14 +302,29 @@ class Game:
             self.max_scores = self.scores
 
         stopped = True
+        got_name = False
         while stopped:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+                    
+            display.blit(img.land, (0, 0))
 
-            print_text('Game over/ Press Enter to play again, Esc to exit. ', 40, 300)  # (сообщение, координата х, координата у)
-            print_text('Max scores: ' + str(self.max_scores), 300, 350)
+            print_text('Game over/ Press Enter to play again, Esc to exit. ', 40, 50)  # (сообщение, координата х, координата у)
+            print_text('Max scores: ' + str(self.max_scores), 300, 100)
+            
+            if not got_name:
+                print_text("Enter your name: ", 40, 150)
+                name = get_input(40, 200)
+                if name:
+                    got_name = True
+                    print(name)
+                    self.high_scores.update(name, self.scores)
+            else:
+                print_text('Name', 40, 150)
+                print_text('Scores', 290, 150)
+                self.high_scores.print(40, 200)
 
             keys = pygame.key.get_pressed()  # программирование клавиш
             if keys[pygame.K_RETURN]:  # enter
@@ -314,7 +334,7 @@ class Game:
                 return False
 
             pygame.display.update()
-            clock.tick(15)
+            #clock.tick(15)
 
     @staticmethod
     def pause():  # функция паузы
