@@ -52,3 +52,4 @@ def get_input():
     if in_tic == -30:
         input_text += '|'
         in_tic = 30
+    return None
