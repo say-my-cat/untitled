@@ -141,7 +141,7 @@ class Game:
                     pygame.quit()
                     quit()
 
-            display.fill((255, 255, 255))
+            display.fill((45, 64, 106))
 
             if hero1.draw(270, 200, '1theme', font_size=50):
                 set_hero(1)
