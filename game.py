@@ -1,8 +1,10 @@
+#import parameters as p
 from button import *
 from states import *
 from vrag import *
 from ob import *
 from effects import *
+#from images import *
 import images as img
 from parameters import *
 from save import *
@@ -45,7 +47,7 @@ class Game:
                 self.choose_hero()
                 self.start_game()
             elif self.game_state.check(State.CONTINUE):
-                # self.choose_them = self.save_data.get('theme')
+                #self.choose_them = self.save_data.get('theme')
                 self.max_scores = self.save_data.get('max')
                 self.start_game()
             elif self.game_state.check(State.LEVEL_2):
@@ -64,8 +66,8 @@ class Game:
         cont_btn = Button(222, 70)
         lvl2_btn = Button(170, 70)
         quit_btn = Button(120, 70)
-
         show = True
+
         while show:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -73,18 +75,20 @@ class Game:
                     quit()
 
             display.blit(menu_bckgr, (0, 0))
-            if start_btn.draw(270, 200, 'Start game', font_size=50):  # размер не работает
+            if start_btn.draw(270, 200, 'Start game', font_size=50):
                 self.game_state.change(State.START)
                 return
-            if lvl2_btn.draw(320, 300, 'Level 2', font_size=50):  # размер не работает
+            if lvl2_btn.draw(320, 300, 'Level 2', font_size=50):
                 self.game_state.change(State.LEVEL_2)
                 return
-            if cont_btn.draw(300, 400, 'Continue game', font_size=50):  # размер не работает
+            if cont_btn.draw(300, 400, 'Continue', font_size=50):
                 self.game_state.change(State.CONTINUE)
                 return
-            if quit_btn.draw(345, 500, 'Quit', font_size=50):  # размер не работает
+            if quit_btn.draw(345, 500, 'Quit', font_size=50):
                 self.game_state.change(State.QUIT)
                 return
+
+            get_input()
 
             pygame.display.update()
             clock.tick(60)
@@ -283,7 +287,7 @@ class Game:
 
             self.draw_vrag(all_vrags)
             self.chec_vrag_dmg(all_ms_bullets, all_vrags)
-           
+
             pygame.display.update()
             clock.tick(80)  # кол-во обновлений дисплея
         return self.game_over()
@@ -315,7 +319,7 @@ class Game:
     @staticmethod
     def pause():  # функция паузы
         paused = True
-        #pygame.mixer.music.pause()
+        pygame.mixer.music.pause()
 
         while paused:
             for event in pygame.event.get():
@@ -366,7 +370,7 @@ class Game:
             if not check:
                 self.object_return(array, cactus)
 
-    def check_collision(self, barriers):  # функция сталкновения для каждого кактуса своя 
+    def check_collision(self, barriers):  # функция сталкновения для каждого кактуса своя #234
         for barrier in barriers:
             if barrier.y == 449:  # little cac
                 if not self.make_jump:
