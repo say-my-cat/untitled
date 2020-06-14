@@ -62,9 +62,9 @@ class Game:
                 break
 
     def show_menu(self):
-        #pygame.mixer.music.load('Big_Slinker.mp3')
-        #pygame.mixer.music.set_volume(0.3)  # 30% громкости
-        #pygame.mixer.music.play(-1)
+        pygame.mixer.music.load('Big_Slinker.mp3')
+        pygame.mixer.music.set_volume(0.3)  # 30% громкости
+        pygame.mixer.music.play(-1)
 
         start_btn = Button(288, 70)
         cont_btn = Button(222, 70)
@@ -97,9 +97,9 @@ class Game:
             clock.tick(60)
 
     def start_game(self):
-        #pygame.mixer.music.load('background.mp3')
-        #pygame.mixer.music.set_volume(0.3)  # 30% громкости
-        #pygame.mixer.music.play(-1)  # пока не проиграешь
+        pygame.mixer.music.load('background.mp3')
+        pygame.mixer.music.set_volume(0.3)  # 30% громкости
+        pygame.mixer.music.play(-1)  # пока не проиграешь
 
         while self.game_cycle():
             self.scores = 0
@@ -281,10 +281,7 @@ class Game:
             self.heart_plus(heart)
 
             if self.check_collision(cactus_arr):  # проверка столкновения
-                pygame.mixer.music.stop()
-                pygame.mixer.Sound.play(fall_sound)
-                if not self.check_health():
-                    game = False
+                game = False
 
             self.show_health()
 
