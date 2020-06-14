@@ -12,7 +12,7 @@ from high_score import *
 
 class Game:
     def __init__(self):
-        pygame.display.set_caption('KYS`')
+        pygame.display.set_caption('Runner')
         pygame.display.set_icon(icon)
 
         pygame.mixer.music.load('song/background.mp3')
