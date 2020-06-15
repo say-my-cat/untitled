@@ -305,7 +305,7 @@ class Game:
                     
             display.blit(img.land, (0, 0))
 
-            print_text('Game over/ Press Enter to play again, Esc to exit. ', 40, 50)  # (сообщение, координата х, координата у)
+            print_text('Game over. Press Enter to play again, Esc to exit. ', 40, 50)  # (сообщение, координата х, координата у)
             print_text('Max scores: ' + str(self.max_scores), 300, 100)
             
             if not got_name:
