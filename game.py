@@ -86,9 +86,6 @@ class Game:
             if lvl2_btn.draw(320, 300, 'Level 2', font_size=50):
                 self.game_state.change(State.LEVEL_2)
                 return
-            if cont_btn.draw(300, 400, 'Continue', font_size=50):
-                self.game_state.change(State.CONTINUE)
-                return
             if quit_btn.draw(345, 500, 'Quit', font_size=50):
                 self.game_state.change(State.QUIT)
                 return
@@ -143,10 +140,10 @@ class Game:
 
             display.fill((45, 64, 106))
 
-            if hero1.draw(270, 200, '1theme', font_size=50):
+            if hero1.draw(270, 200, 'Molnster', font_size=50):
                 set_hero(1)
                 return
-            if hero2.draw(270, 300, '2theme', font_size=50):
+            if hero2.draw(270, 300, 'Dino', font_size=50):
                 set_hero(2)
                 return
 
