@@ -33,7 +33,9 @@ def get_input():
 
                 if event.key == pygame.K_RETURN:
                     need_input = False
+                    message = input_text
                     input_text = ''
+                    return message
                 elif event.key == pygame.K_BACKSPACE:
                     input_text = input_text[:-1]
                 else:
@@ -52,4 +54,5 @@ def get_input():
     if in_tic == -30:
         input_text += '|'
         in_tic = 30
+        
     return None
