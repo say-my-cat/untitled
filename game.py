@@ -2,8 +2,6 @@ from button import *
 from states import *
 from vrag import *
 from ob import *
-from effects import *
-#from images import *
 import images as img
 from parameters import *
 from save import *
@@ -50,7 +48,6 @@ class Game:
                 self.choose_hero()
                 self.start_game()
             elif self.game_state.check(State.CONTINUE):
-                #self.choose_them = self.save_data.get('theme')
                 self.max_scores = self.save_data.get('max')
                 self.start_game()
             elif self.game_state.check(State.LEVEL_2):
@@ -58,11 +55,10 @@ class Game:
             elif self.game_state.check(State.QUIT):
                 self.save_data.save()
                 self.save_data.add('max', self.max_scores)
-                self.save_data.add('hs', self.high_scores.hs_table)
                 break
 
     def show_menu(self):
-        pygame.mixer.music.load('Big_Slinker.mp3')
+        pygame.mixer.music.load('song/Big_Slinker.mp3')
         pygame.mixer.music.set_volume(0.3)  # 30% громкости
         pygame.mixer.music.play(-1)
 
@@ -86,6 +82,9 @@ class Game:
             if lvl2_btn.draw(320, 300, 'Level 2', font_size=50):
                 self.game_state.change(State.LEVEL_2)
                 return
+            if cont_btn.draw(300, 400, 'Continue', font_size=50):
+                self.game_state.change(State.CONTINUE)
+                return
             if quit_btn.draw(345, 500, 'Quit', font_size=50):
                 self.game_state.change(State.QUIT)
                 return
@@ -94,7 +93,7 @@ class Game:
             clock.tick(60)
 
     def start_game(self):
-        pygame.mixer.music.load('background.mp3')
+        pygame.mixer.music.load('song/background.mp3')
         pygame.mixer.music.set_volume(0.3)  # 30% громкости
         pygame.mixer.music.play(-1)  # пока не проиграешь
 
@@ -129,8 +128,8 @@ class Game:
             clock.tick(60)
 
     def choose_hero(self):
-        hero1 = Button(200, 70)
-        hero2 = Button(200, 70)
+        hero1 = Button(250, 70)
+        hero2 = Button(150, 70)
 
         while True:
             for event in pygame.event.get():
@@ -140,7 +139,7 @@ class Game:
 
             display.fill((45, 64, 106))
 
-            if hero1.draw(270, 200, 'Molnster', font_size=50):
+            if hero1.draw(270, 200, 'Monster', font_size=50):
                 set_hero(1)
                 return
             if hero2.draw(270, 300, 'Dino', font_size=50):
@@ -322,7 +321,7 @@ class Game:
                 self.high_scores.print(40, 200)
 
             keys = pygame.key.get_pressed()  # программирование клавиш
-            if keys[pygame.K_RETURN]:  # enter
+            if keys[pygame.K_TAB]: 
                 return True
             if keys[pygame.K_ESCAPE]:
                 self.game_state.change(State.QUIT)
